@@ -1,0 +1,35 @@
+name: umbrella
+description: A new Flutter module project.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  synced_bloc:
+    path: ../../../
+  example_data:
+    path: ../../example_data
+  flutter_bloc: ^8.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  # This section identifies your Flutter project as a module meant for
+  # embedding in a native host app.  These identifiers should _not_ ordinarily
+  # be changed after generation - they are used to ensure that the tooling can
+  # maintain consistency when adding or modifying assets and plugins.
+  # They also do not have any bearing on your native host application's
+  # identifiers, which may be completely independent or the same as these.
+  module:
+    androidX: true
+    androidPackage: dev.masel.umbrella
+    iosBundleIdentifier: dev.masel.umbrella

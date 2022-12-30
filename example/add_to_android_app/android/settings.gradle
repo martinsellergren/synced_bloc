@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+//dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
+rootProject.name = "Synced Bloc Add To Android App Example"
+include ':app'
+
+setBinding(new Binding([gradle: this]))
+evaluate(new File(                                                     // new
+        settingsDir.parentFile,                                              // new
+        'umbrella/.android/include_flutter.groovy'                         // new
+))

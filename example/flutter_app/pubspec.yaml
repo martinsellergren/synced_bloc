@@ -1,0 +1,22 @@
+name: synced_bloc_example
+description: Demonstrates how to use the synced_bloc plugin.
+
+publish_to: "none"
+
+environment:
+  sdk: ">=2.18.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  example_data:
+    path: ../example_data
+  flutter_bloc: ^8.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

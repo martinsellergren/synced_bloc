@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "synced_bloc",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "synced_bloc (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "synced_bloc (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_app",
+            "cwd": "example/flutter_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_app (profile mode)",
+            "cwd": "example/flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_app (release mode)",
+            "cwd": "example/flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "umbrella",
+            "cwd": "example/add_to_android_app/umbrella",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "umbrella (profile mode)",
+            "cwd": "example/add_to_android_app/umbrella",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "umbrella (release mode)",
+            "cwd": "example/add_to_android_app/umbrella",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
