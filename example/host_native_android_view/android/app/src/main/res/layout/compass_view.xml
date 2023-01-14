@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+<com.redinput.compassview.CompassView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/compass"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:backgroundColor="#000000"
+    app:degrees="100"
+    app:lineColor="#FFFFFF"
+    app:markerColor="#FF0000"
+    app:rangeDegrees="180.0"
+    app:showMarker="true"
+    app:textColor="#FFFFFF"
+    app:textSize="15sp" />

@@ -29,8 +29,8 @@ class ThemeViewModel : ViewModel(), NativeSyncSlave.ChangeListener {
     }
 
     override fun onSyncedBlocStateChange() {
-        if (themeBloc.state == null) return
-        val jsonObj = JSONObject(themeBloc.state!!)
+        if (themeBloc.jsonState == null) return
+        val jsonObj = JSONObject(themeBloc.jsonState!!)
         val isDark = jsonObj.getBoolean("isDark")
         _useDarkTheme.value = isDark
         _text.value = "Is using ${if (isDark) "dark" else "light"} theme"

@@ -39,7 +39,7 @@ class NativeSyncSlave private constructor(val masterId: String) {
     fun removeChangeListener(listener: ChangeListener) = changeListeners.remove(listener)
 
     // Transitions from null after short init delay
-    var state: String? = null
+    var jsonState: String? = null
         private set
 
     private var syncMaster: SyncMaster? = null
@@ -52,7 +52,7 @@ class NativeSyncSlave private constructor(val masterId: String) {
     private fun sync() {
         syncMaster?.getState(
             onSuccess = { res ->
-                state = (res as String)
+                jsonState = (res as String)
                 changeListeners.forEach { it.onSyncedBlocStateChange() }
             },
             onError = { throw Error() }

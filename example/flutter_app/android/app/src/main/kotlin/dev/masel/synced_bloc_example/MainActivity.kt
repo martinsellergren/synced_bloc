@@ -27,6 +27,6 @@ class MainActivity : FlutterActivity(), NativeSyncSlave.ChangeListener {
     }
 
     override fun onSyncedBlocStateChange() {
-        Log.wtf("<ME>", "AuthBloc change: ${authRepo.state}")
+        Log.wtf("<ME>", "AuthBloc change: ${authRepo.jsonState}")
     }
 }

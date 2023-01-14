@@ -8,7 +8,7 @@ part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> with SyncMasterMixin {
-  ThemeBloc() : super(const ThemeState(isDark: true)) {
+  ThemeBloc() : super(const ThemeState(isDark: false)) {
     setupSyncMaster(
         masterId: 'ThemeBloc',
         stateToJson: (state) => state.toJson(),

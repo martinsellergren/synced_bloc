@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             return when (menuPosToId(position)) {
                 R.id.navigation_home -> FlutterModules.HomePage.createFragment() // Replaced HomeFragment() with flutter module
                 R.id.navigation_account -> FlutterModules.AccountPage.createFragment() // Replaced AccountFragment()
-                R.id.navigation_theme -> ThemeFragment() // Not just migrated
+                R.id.navigation_theme -> ThemeFragment() // Not yet migrated
                 else -> throw Error()
             }
         }
