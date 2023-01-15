@@ -20,4 +20,8 @@ class AuthBlocSlave extends Bloc<AuthEvent, AuthState>
         masterId: 'AuthBloc', fromJson: (json) => AuthState.fromJson(json));
     return AuthBlocSlave(id: id, initialState: masterState);
   }
+
+  // static AuthBlocSlave create({required String id}) {
+  //   return AuthBlocSlave(id: id, initialState: const AuthState.loggedOut());
+  // }
 }
