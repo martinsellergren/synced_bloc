@@ -12,7 +12,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> with SyncMasterMixin {
   AuthBloc() : super(const _LoggedOut()) {
     setupSyncMaster(
-        masterId: 'AuthBloc',
+        masterId: 'auth',
         stateToJson: (state) => state.toJson(),
         eventFromJson: (json) => AuthEvent.fromJson(json));
     on<_LogIn>(_onLogIn);

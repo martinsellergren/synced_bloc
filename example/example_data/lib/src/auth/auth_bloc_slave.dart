@@ -9,7 +9,7 @@ class AuthBlocSlave extends Bloc<AuthEvent, AuthState>
   AuthBlocSlave({required String id, AuthState? initialState})
       : super(initialState ?? const AuthState.loggedOut()) {
     setupSyncSlave(
-        masterId: 'AuthBloc',
+        masterId: 'auth',
         slaveId: id,
         stateFromJson: (json) => AuthState.fromJson(json),
         eventToJson: (event) => event.toJson());
@@ -17,11 +17,7 @@ class AuthBlocSlave extends Bloc<AuthEvent, AuthState>
 
   static Future<AuthBlocSlave> create({required String id}) async {
     AuthState masterState = await SyncSlaveMixin.getMasterState(
-        masterId: 'AuthBloc', fromJson: (json) => AuthState.fromJson(json));
+        masterId: 'auth', fromJson: (json) => AuthState.fromJson(json));
     return AuthBlocSlave(id: id, initialState: masterState);
   }
-
-  // static AuthBlocSlave create({required String id}) {
-  //   return AuthBlocSlave(id: id, initialState: const AuthState.loggedOut());
-  // }
 }
