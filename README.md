@@ -130,9 +130,6 @@ Some problems and limitations with this approach though:
 
 With this package, the whole process can be simplified. Instead of above method, start by creating a sync master AuthManager (AuthBloc) in dart and let any flutter modules and native views depend on this AuthManager instead of any native AuthManager. Now, actually all limitations with previous method mentioned above are eliminated.
 
-
-### Ehm, some more details please
-
 ![bla](diagrams/add-to-app-simplified.png)
 
 On native app startup, create (and cache) any flutter modules you have - including a **dependency maintainer** module. The dependency maintainer doesn't have any ui, it only creates and maintains dependency objects (sync master blocs!). It's running during the whole app lifecycle and provides dependencies to other modules/ native app. Anyone can access these dependencies by creating a sync slave.
