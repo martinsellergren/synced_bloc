@@ -56,19 +56,19 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           case 0:
             return 'Home';
           case 1:
-            return 'Theme';
-          default:
             return 'Account';
+          default:
+            return 'Theme';
         }
       }())),
       body: TabBarView(
         controller: tabController,
         children: [
           HomePage(dependencies: widget.dependencies),
-          const Center(child: Text('Theme')),
           AccountPage(
               authBloc: widget.dependencies.authBloc,
               themeBloc: widget.dependencies.themeBloc),
+          const Center(child: Text('Theme')),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -78,8 +78,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           },
           items: <dynamic>[
             ['Home', Icons.home],
-            ['Theme', Icons.color_lens],
             ['Account', Icons.settings],
+            ['Theme', Icons.color_lens],
           ]
               .map(
                   (e) => BottomNavigationBarItem(label: e[0], icon: Icon(e[1])))
