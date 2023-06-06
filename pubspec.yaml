@@ -1,7 +1,7 @@
 name: synced_bloc
 description: A bloc that is synced across platform channels.
-version: 0.0.1
-homepage: https://github.com/mase7569/synced_bloc
+version: 1.0.0
+repository: https://github.com/mase7569/synced_bloc
 
 environment:
   sdk: ">=2.18.5 <3.0.0"
