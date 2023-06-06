@@ -1,6 +1,6 @@
 name: synced_bloc
-description: A bloc that is synced across platform channels.
-version: 1.0.0
+description: A bloc (https://pub.dev/packages/bloc) that is synced across platform channels.
+version: 1.0.1
 repository: https://github.com/mase7569/synced_bloc
 
 environment:

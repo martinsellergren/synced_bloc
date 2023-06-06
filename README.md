@@ -1,12 +1,10 @@
 # synced_bloc plugin
 
-A [bloc](https://pub.dev/packages/flutter_bloc) that is synced across platform channels.
+A [bloc](https://pub.dev/packages/bloc) that is synced across platform channels.
 
 ## Overview
 
 Transform any bloc into a sync master and access it anywhere within the app where platform channels are accessible. You can for example share a bloc between different flutter instances and even access it in native code. This works by transforming states and events to json and sending it over platform channels.
-
-Note: currently only android supported.
 
 ## Motivation
 
@@ -143,7 +141,3 @@ Please see [example/add_to_android_app](https://github.com/mase7569/synced_bloc/
 ### Can I sync blocs between isolates
 
 No, unfortunately flutter doesn't currently support setting up method call handlers in other isolates than the main isolate. Checkout https://pub.dev/packages/isolate_bloc instead.
-
-## Up next
-
-- Ios support
