@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:synced_bloc/synced_bloc_mixin.dart';
+import 'package:synced_bloc/synced_bloc.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_bloc.g.dart';

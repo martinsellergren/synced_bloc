@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:synced_bloc/synced_bloc_mixin.dart';
+import 'package:synced_bloc/synced_bloc.dart';
 
 import 'theme_bloc.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:synced_bloc/synced_bloc_mixin.dart';
+import 'package:synced_bloc/synced_bloc.dart';
 
 part 'theme_bloc.freezed.dart';
 part 'theme_bloc.g.dart';
