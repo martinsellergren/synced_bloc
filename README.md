@@ -50,55 +50,55 @@ AuthBloc authBloc = AuthBloc();
 
 ### Access the bloc in dart (e.g in another flutter instance)
 
-1) Use `extends Bloc<...> with SyncSlaveMixin implements TheBloc`
-2) First call in constructor `setupSyncSlave(...)`
+1) Use `extends Bloc<...> with SyncSubscriberMixin implements TheBloc`
+2) First call in constructor `setupSyncSubscriber(...)`
 
 Example:
 ```dart
-class AuthBlocSlave extends Bloc<AuthEvent, AuthState>
-    with SyncSlaveMixin
+class AuthBlocSubscriber extends Bloc<AuthEvent, AuthState>
+    with SyncSubscriberMixin
     implements AuthBloc {
 
-  AuthBlocSlave({required String id, AuthState? initialState})
+  AuthBlocSubscriber({required String id, AuthState? initialState})
       : super(initialState ?? const AuthState.loggedOut()) {
-    setupSyncSlave(
+    setupSyncSubscriber(
         masterId: 'auth', // auth is the masterId
-        slaveId: id, // (masterId, slaveId) must to be unique within app
+        subscriberId: id, // (masterId, subscriberId) must to be unique within app
         stateFromJson: (json) => AuthState.fromJson(json), // automatically generated if using freezed: https://pub.dev/packages/freezed#fromjsontojson
         eventToJson: (event) => event.toJson(), // same
       );
   }
 
   // optional, see below
-  static Future<AuthBlocSlave> create({required String id}) async {
-    AuthState masterState = await SyncSlaveMixin.getMasterState(
+  static Future<AuthBlocSubscriber> create({required String id}) async {
+    AuthState masterState = await SyncSubscriberMixin.getMasterState(
         masterId: 'auth', fromJson: (json) => AuthState.fromJson(json));
-    return AuthBlocSlave(id: id, initialState: masterState);
+    return AuthBlocSubscriber(id: id, initialState: masterState);
   }
 }
 
 ```
 
-Create the SyncSlave (note: the type is AuthBloc, just as master's):
+Create the SyncSubscriber (note: the type is AuthBloc, just as master's):
 ```dart
-AuthBloc authBloc = AuthBlocSlave(id: 'whatever');
+AuthBloc authBloc = AuthBlocSubscriber(id: 'whatever');
 ```
 
-The slave's state will automatically transition to master's state in just a few milliseconds. If this is undesirable, consider:
+The subscriber's state will automatically transition to master's state in just a few milliseconds. If this is undesirable, consider:
 ```dart
-AuthBloc authBloc = await AuthBlocSlave.create(id: 'whatever');
+AuthBloc authBloc = await AuthBlocSubscriber.create(id: 'whatever');
 ```
 
 Note:
-- Each master can have any number of slaves.
-- Use a different library (i.e dart-file) than sync master's library for the slave - otherwise you'll see a compile time error.
+- Each master can have any number of subscribers.
+- Use a different library (i.e dart-file) than sync master's library for the subscriber - otherwise you'll see a compile time error.
 
 ### Access the bloc in native code
 
 Simply:
 
 ```kotlin
-NativeSyncSlave.withMasterId("auth") //'auth' is the masterId
+NativeSyncSubscriber.withMasterId("auth") //'auth' is the masterId
 ```
 
 You might wanna refine this "bloc" a bit since its state and events are all json. You could e.g create a new native bloc object which handles converting json-to-native for the state and native-to-json for events. It's usually easy to convert between json and native objects, just use a tool such as https://jsonformatter.org/json-to-kotlin.
@@ -132,7 +132,7 @@ With this package, the whole process can be simplified. Instead of above method,
 
 ![bla](diagrams/add-to-app-simplified.png)
 
-On native app startup, create (and cache) any flutter modules you have - including a **dependency maintainer** module. The dependency maintainer doesn't have any ui, it only creates and maintains dependency objects (sync master blocs!). It's running during the whole app lifecycle and provides dependencies to other modules/ native app. Anyone can access these dependencies by creating a sync slave.
+On native app startup, create (and cache) any flutter modules you have - including a **dependency maintainer** module. The dependency maintainer doesn't have any ui, it only creates and maintains dependency objects (sync master blocs!). It's running during the whole app lifecycle and provides dependencies to other modules/ native app. Anyone can access these dependencies by creating a sync subscriber.
 
 Any native view (i.e not yet migrated to flutter) that needs to access/modify the auth state may make use of the dependency maintainer's AuthManager instead of the old native implementation, so the auth state is correctly updated etc (or just make the native AuthManager depend on the flutter AuthManager as illustrated in the diagram with the dashed arrow).
 

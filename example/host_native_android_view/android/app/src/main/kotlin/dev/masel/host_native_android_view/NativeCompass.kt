@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import com.redinput.compassview.CompassView
 import dev.masel.host_native_android_view.databinding.CompassViewBinding
-import dev.masel.synced_bloc.NativeSyncSlave
+import dev.masel.synced_bloc.NativeSyncSubscriber
 import io.flutter.plugin.platform.PlatformView
 
 internal class NativeCompass(context: Context, id: Int, creationParams: Map<String?, Any?>?) :
-    PlatformView, Compass.CompassListener, NativeSyncSlave.ChangeListener {
+    PlatformView, Compass.CompassListener, NativeSyncSubscriber.ChangeListener {
     private val compassView: CompassView
     private val compass: Compass
     private val compassBloc: CompassBloc
@@ -27,13 +27,13 @@ internal class NativeCompass(context: Context, id: Int, creationParams: Map<Stri
         compass.start()
 
         compassBloc = CompassBloc()
-        compassBloc.syncSlave.addChangeListener(this)
+        compassBloc.syncSubscriber.addChangeListener(this)
     }
 
     override fun dispose() {
         compass.setListener(null)
         compass.stop()
-        compassBloc.syncSlave.removeChangeListener(this)
+        compassBloc.syncSubscriber.removeChangeListener(this)
     }
 
     var lastUpdateTime = System.currentTimeMillis()

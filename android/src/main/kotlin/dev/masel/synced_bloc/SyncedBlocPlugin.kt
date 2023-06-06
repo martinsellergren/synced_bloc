@@ -10,18 +10,18 @@ import io.flutter.plugin.common.MethodChannel.Result
 class SyncedBlocPlugin : FlutterPlugin, MethodCallHandler {
     internal companion object {
         val masters: MutableList<SyncMaster> = mutableListOf()
-        val slaves: MutableList<SyncSlave> = mutableListOf()
+        val subscribers: MutableList<SyncSubscriber> = mutableListOf()
 
-        fun getSlavesOfMaster(masterId: String): List<SyncSlave> {
-            return slaves.filter { slave -> slave.masterId == masterId }
+        fun getSubscribersOfMaster(masterId: String): List<SyncSubscriber> {
+            return subscribers.filter { subscriber -> subscriber.masterId == masterId }
         }
 
         fun getMasterWithId(masterId: String): SyncMaster? {
             return masters.firstOrNull { it.masterId == masterId }
         }
 
-        fun getSlaveWithId(masterId: String, slaveId: String): SyncSlave? {
-            return slaves.firstOrNull { it.masterId == masterId && it.slaveId == slaveId }
+        fun getSubscriberWithId(masterId: String, subscriberId: String): SyncSubscriber? {
+            return subscribers.firstOrNull { it.masterId == masterId && it.subscriberId == subscriberId }
         }
     }
 
@@ -44,30 +44,30 @@ class SyncedBlocPlugin : FlutterPlugin, MethodCallHandler {
                 val masterId: String = call.argument("masterId")!!
                 SyncMaster(binaryMessenger, masterId).let {
                     masters.add(it)
-                    NativeSyncSlave.onRegisterMaster(it)
+                    NativeSyncSubscriber.onRegisterMaster(it)
                 }
             }
             "unregisterMaster" -> {
                 val masterId: String = call.argument("masterId")!!
-                getSlavesOfMaster(masterId).forEach { slaves.remove(it) }
+                getSubscribersOfMaster(masterId).forEach { subscribers.remove(it) }
                 masters.remove(getMasterWithId(masterId))
-                NativeSyncSlave.onUnregisterMaster(masterId)
+                NativeSyncSubscriber.onUnregisterMaster(masterId)
             }
-            "registerSlave" -> {
+            "registerSubscriber" -> {
                 val masterId: String = call.argument("masterId")!!
-                val slaveId: String = call.argument("slaveId")!!
+                val subscriberId: String = call.argument("subscriberId")!!
                 if (getMasterWithId(masterId) == null) throw Error()
-                slaves.add(SyncSlave(binaryMessenger, masterId, slaveId))
+                subscribers.add(SyncSubscriber(binaryMessenger, masterId, subscriberId))
             }
-            "unregisterSlave" -> {
+            "unregisterSubscriber" -> {
                 val masterId: String = call.argument("masterId")!!
-                val slaveId: String = call.argument("slaveId")!!
-                slaves.remove(getSlaveWithId(masterId, slaveId))
+                val subscriberId: String = call.argument("subscriberId")!!
+                subscribers.remove(getSubscriberWithId(masterId, subscriberId))
             }
             "notifyChange" -> {
                 val masterId: String = call.argument("masterId")!!
-                getSlavesOfMaster(masterId).forEach { it.notifyMasterChange() }
-                NativeSyncSlave.onMasterChange(masterId)
+                getSubscribersOfMaster(masterId).forEach { it.notifyMasterChange() }
+                NativeSyncSubscriber.onMasterChange(masterId)
             }
             "getState" -> {
                 val masterId: String = call.argument("masterId")!!

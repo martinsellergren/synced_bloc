@@ -16,7 +16,7 @@ void dependencyMaintainer() async {
 @pragma('vm:entry-point')
 void homePage() {
   WidgetsFlutterBinding.ensureInitialized();
-  final dependencies = Dependencies(syncSlaveId: 'HomePage');
+  final dependencies = Dependencies(syncSubscriberId: 'HomePage');
   runApp(MaterialApp(home: HomePage(dependencies: dependencies)));
 }
 
@@ -32,8 +32,8 @@ void accountPage() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
       home: AccountPage(
-    authBloc: AuthBlocSlave(id: 'HomePage'),
-    themeBloc: ThemeBlocSlave(id: 'HomePage'),
+    authBloc: AuthBlocSubscriber(id: 'HomePage'),
+    themeBloc: ThemeBlocSubscriber(id: 'HomePage'),
   )));
 }
 

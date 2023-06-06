@@ -3,21 +3,21 @@ import 'package:synced_bloc/synced_bloc_mixin.dart';
 
 import 'auth_bloc.dart';
 
-class AuthBlocSlave extends Bloc<AuthEvent, AuthState>
-    with SyncSlaveMixin
+class AuthBlocSubscriber extends Bloc<AuthEvent, AuthState>
+    with SyncSubscriberMixin
     implements AuthBloc {
-  AuthBlocSlave({required String id, AuthState? initialState})
+  AuthBlocSubscriber({required String id, AuthState? initialState})
       : super(initialState ?? const AuthState.loggedOut()) {
-    setupSyncSlave(
+    setupSyncSubscriber(
         masterId: 'auth',
-        slaveId: id,
+        subscriberId: id,
         stateFromJson: (json) => AuthState.fromJson(json),
         eventToJson: (event) => event.toJson());
   }
 
-  static Future<AuthBlocSlave> create({required String id}) async {
-    AuthState masterState = await SyncSlaveMixin.getMasterState(
+  static Future<AuthBlocSubscriber> create({required String id}) async {
+    AuthState masterState = await SyncSubscriberMixin.getMasterState(
         masterId: 'auth', fromJson: (json) => AuthState.fromJson(json));
-    return AuthBlocSlave(id: id, initialState: masterState);
+    return AuthBlocSubscriber(id: id, initialState: masterState);
   }
 }

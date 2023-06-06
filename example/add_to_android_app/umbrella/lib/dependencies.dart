@@ -9,11 +9,12 @@ class Dependencies {
     required this.themeBloc,
   });
 
-  factory Dependencies({String? syncSlaveId}) {
-    bool isSyncMaster = syncSlaveId == null;
-    final authBloc = isSyncMaster ? AuthBloc() : AuthBlocSlave(id: syncSlaveId);
+  factory Dependencies({String? syncSubscriberId}) {
+    bool isSyncMaster = syncSubscriberId == null;
+    final authBloc =
+        isSyncMaster ? AuthBloc() : AuthBlocSubscriber(id: syncSubscriberId);
     final themeBloc =
-        isSyncMaster ? ThemeBloc() : ThemeBlocSlave(id: syncSlaveId);
+        isSyncMaster ? ThemeBloc() : ThemeBlocSubscriber(id: syncSubscriberId);
     return Dependencies._(authBloc: authBloc, themeBloc: themeBloc);
   }
 }

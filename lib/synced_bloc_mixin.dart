@@ -44,24 +44,24 @@ mixin SyncMasterMixin<Event, State> on Bloc<Event, State> {
   }
 }
 
-mixin SyncSlaveMixin<Event, State> on Bloc<Event, State> {
+mixin SyncSubscriberMixin<Event, State> on Bloc<Event, State> {
   late final String _masterId;
-  late final String _slaveId;
+  late final String _subscriberId;
   late final Map<String, dynamic> Function(Event event)? _eventToJson;
 
-  /// (masterId, slaveId) required to be unique within app
-  void setupSyncSlave({
+  /// (masterId, subscriberId) required to be unique within app
+  void setupSyncSubscriber({
     required String masterId,
-    required String slaveId,
+    required String subscriberId,
     required State Function(Map<String, dynamic> json) stateFromJson,
     required Map<String, dynamic> Function(Event event) eventToJson,
   }) async {
     _masterId = masterId;
-    _slaveId = slaveId;
+    _subscriberId = subscriberId;
     _eventToJson = eventToJson;
-    getDelegatorChannel().invokeMethod(
-        'registerSlave', {'masterId': masterId, 'slaveId': slaveId});
-    getSlaveChannel(masterId: masterId, slaveId: slaveId)
+    getDelegatorChannel().invokeMethod('registerSubscriber',
+        {'masterId': masterId, 'subscriberId': subscriberId});
+    getSubscriberChannel(masterId: masterId, subscriberId: subscriberId)
         .setMethodCallHandler((call) async {
       switch (call.method) {
         case 'notifyMasterChange':
@@ -76,9 +76,9 @@ mixin SyncSlaveMixin<Event, State> on Bloc<Event, State> {
 
   @override
   Future<void> close() {
-    getDelegatorChannel().invokeMethod(
-        'unregisterSlave', {'masterId': _masterId, 'slaveId': _slaveId});
-    getSlaveChannel(masterId: _masterId, slaveId: _slaveId)
+    getDelegatorChannel().invokeMethod('unregisterSubscriber',
+        {'masterId': _masterId, 'subscriberId': _subscriberId});
+    getSubscriberChannel(masterId: _masterId, subscriberId: _subscriberId)
         .setMethodCallHandler(null);
     return super.close();
   }
@@ -108,6 +108,6 @@ mixin SyncSlaveMixin<Event, State> on Bloc<Event, State> {
     required Map<String, dynamic> Function(State state) stateToJson,
     required Event Function(Map<String, dynamic> json) eventFromJson,
   }) {
-    throw 'Use setupSyncSlave()';
+    throw 'Use setupSyncSubscriber()';
   }
 }

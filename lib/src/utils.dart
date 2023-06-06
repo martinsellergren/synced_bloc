@@ -8,7 +8,8 @@ MethodChannel getMasterChannel({required String masterId}) {
   return MethodChannel('dev.masel.synced_bloc.master.$masterId');
 }
 
-MethodChannel getSlaveChannel(
-    {required String masterId, required String slaveId}) {
-  return MethodChannel('dev.masel.synced_bloc.slave.$masterId.$slaveId');
+MethodChannel getSubscriberChannel(
+    {required String masterId, required String subscriberId}) {
+  return MethodChannel(
+      'dev.masel.synced_bloc.subscriber.$masterId.$subscriberId');
 }

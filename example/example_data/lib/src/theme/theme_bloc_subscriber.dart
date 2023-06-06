@@ -3,21 +3,21 @@ import 'package:synced_bloc/synced_bloc_mixin.dart';
 
 import 'theme_bloc.dart';
 
-class ThemeBlocSlave extends Bloc<ThemeEvent, ThemeState>
-    with SyncSlaveMixin
+class ThemeBlocSubscriber extends Bloc<ThemeEvent, ThemeState>
+    with SyncSubscriberMixin
     implements ThemeBloc {
-  ThemeBlocSlave({required String id, ThemeState? initialState})
+  ThemeBlocSubscriber({required String id, ThemeState? initialState})
       : super(initialState ?? const ThemeState()) {
-    setupSyncSlave(
+    setupSyncSubscriber(
         masterId: 'ThemeBloc',
-        slaveId: id,
+        subscriberId: id,
         stateFromJson: (json) => ThemeState.fromJson(json),
         eventToJson: (event) => event.toJson());
   }
 
-  static Future<ThemeBlocSlave> create({required String id}) async {
-    ThemeState masterState = await SyncSlaveMixin.getMasterState(
+  static Future<ThemeBlocSubscriber> create({required String id}) async {
+    ThemeState masterState = await SyncSubscriberMixin.getMasterState(
         masterId: 'ThemeBloc', fromJson: (json) => ThemeState.fromJson(json));
-    return ThemeBlocSlave(id: id, initialState: masterState);
+    return ThemeBlocSubscriber(id: id, initialState: masterState);
   }
 }

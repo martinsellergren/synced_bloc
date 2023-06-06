@@ -5,39 +5,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final AuthBloc authMaster = AuthBloc();
-  final AuthBloc authSlave0 = AuthBlocSlave(
+  final AuthBloc authSubscriber0 = AuthBlocSubscriber(
       id: '0', initialState: const AuthState.loggedOut(hasLoginError: true));
-  final AuthBloc authSlave1 = await AuthBlocSlave.create(id: '1');
+  final AuthBloc authSubscriber1 = await AuthBlocSubscriber.create(id: '1');
 
   final ThemeBloc themeMaster = ThemeBloc();
-  final ThemeBloc themeSlave = ThemeBlocSlave(id: '0');
+  final ThemeBloc themeSubscriber = ThemeBlocSubscriber(id: '0');
 
   runApp(
     MaterialApp(
       home: Page(
           authMaster: authMaster,
-          authSlave0: authSlave0,
-          authSlave1: authSlave1,
+          authSubscriber0: authSubscriber0,
+          authSubscriber1: authSubscriber1,
           themeMaster: themeMaster,
-          themeSlave: themeSlave),
+          themeSubscriber: themeSubscriber),
     ),
   );
 }
 
 class Page extends StatelessWidget {
   final AuthBloc authMaster;
-  final AuthBloc authSlave0;
-  final AuthBloc authSlave1;
+  final AuthBloc authSubscriber0;
+  final AuthBloc authSubscriber1;
   final ThemeBloc themeMaster;
-  final ThemeBloc themeSlave;
+  final ThemeBloc themeSubscriber;
 
   const Page({
     Key? key,
     required this.authMaster,
-    required this.authSlave0,
-    required this.authSlave1,
+    required this.authSubscriber0,
+    required this.authSubscriber1,
     required this.themeMaster,
-    required this.themeSlave,
+    required this.themeSubscriber,
   }) : super(key: key);
 
   @override
@@ -45,14 +45,14 @@ class Page extends StatelessWidget {
     return BlocBuilder(
       bloc: authMaster,
       builder: (context, authMasterState) => BlocBuilder(
-        bloc: authSlave0,
-        builder: (context, authSlave0State) => BlocBuilder(
-          bloc: authSlave1,
-          builder: (context, authSlave1State) => BlocBuilder(
+        bloc: authSubscriber0,
+        builder: (context, authSubscriber0State) => BlocBuilder(
+          bloc: authSubscriber1,
+          builder: (context, authSubscriber1State) => BlocBuilder(
               bloc: themeMaster,
               builder: (context, themeMasterState) => BlocBuilder(
-                  bloc: themeSlave,
-                  builder: (context, themeSlaveState) => Theme(
+                  bloc: themeSubscriber,
+                  builder: (context, themeSubscriberState) => Theme(
                         data: Theme.of(context).copyWith(
                             scaffoldBackgroundColor: themeMaster.state.isDark
                                 ? Colors.purple
@@ -61,7 +61,7 @@ class Page extends StatelessWidget {
                           appBar: AppBar(),
                           body: ListView(
                             children: [
-                              ...[authMaster, authSlave0, authSlave1]
+                              ...[authMaster, authSubscriber0, authSubscriber1]
                                   .map((bloc) => [
                                         Text('${bloc.state}'),
                                         TextButton(
@@ -79,7 +79,7 @@ class Page extends StatelessWidget {
                                 ..sort((a, b) => a.runtimeType
                                     .toString()
                                     .compareTo(b.runtimeType.toString())),
-                              ...[themeMaster, themeSlave]
+                              ...[themeMaster, themeSubscriber]
                                   .map((bloc) => [
                                         Text('${bloc.state}'),
                                         TextButton(

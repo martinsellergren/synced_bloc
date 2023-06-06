@@ -3,10 +3,10 @@ package com.example.syncedblocaddtoandroidappexample.ui.theme
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dev.masel.synced_bloc.NativeSyncSlave
+import dev.masel.synced_bloc.NativeSyncSubscriber
 import org.json.JSONObject
 
-class ThemeViewModel : ViewModel(), NativeSyncSlave.ChangeListener {
+class ThemeViewModel : ViewModel(), NativeSyncSubscriber.ChangeListener {
 
     private val _text = MutableLiveData<String>().apply {
         value = ""
@@ -18,7 +18,7 @@ class ThemeViewModel : ViewModel(), NativeSyncSlave.ChangeListener {
     }
     val isDarkTheme: LiveData<Boolean> = _useDarkTheme
 
-    private var themeBloc: NativeSyncSlave = NativeSyncSlave.withMasterId("ThemeBloc")
+    private var themeBloc: NativeSyncSubscriber = NativeSyncSubscriber.withMasterId("ThemeBloc")
 
     init {
         themeBloc.addChangeListener(this)

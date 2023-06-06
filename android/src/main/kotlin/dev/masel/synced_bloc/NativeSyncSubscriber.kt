@@ -1,32 +1,32 @@
 package dev.masel.synced_bloc
 
-class NativeSyncSlave private constructor(val masterId: String) {
+class NativeSyncSubscriber private constructor(val masterId: String) {
     companion object {
-        private val nativeSyncSlaves: MutableList<NativeSyncSlave> = mutableListOf()
+        private val nativeSyncSubscribers: MutableList<NativeSyncSubscriber> = mutableListOf()
 
-        fun withMasterId(masterId: String): NativeSyncSlave {
-            val existing = nativeSyncSlaves.firstOrNull { it.masterId == masterId }
+        fun withMasterId(masterId: String): NativeSyncSubscriber {
+            val existing = nativeSyncSubscribers.firstOrNull { it.masterId == masterId }
             return if (existing != null) {
                 existing.sync() //So always trigger change listeners
                 existing
             } else {
-                val new = NativeSyncSlave(masterId)
+                val new = NativeSyncSubscriber(masterId)
                 SyncedBlocPlugin.getMasterWithId(masterId)?.let(new::setup)
-                nativeSyncSlaves.add(new)
+                nativeSyncSubscribers.add(new)
                 new
             }
         }
 
         internal fun onRegisterMaster(master: SyncMaster) {
-            nativeSyncSlaves.firstOrNull { it.masterId == master.masterId }?.setup(master)
+            nativeSyncSubscribers.firstOrNull { it.masterId == master.masterId }?.setup(master)
         }
 
         internal fun onUnregisterMaster(masterId: String) {
-            nativeSyncSlaves.firstOrNull { it.masterId == masterId }?.syncMaster = null
+            nativeSyncSubscribers.firstOrNull { it.masterId == masterId }?.syncMaster = null
         }
 
         internal fun onMasterChange(masterId: String) {
-            nativeSyncSlaves.firstOrNull { it.masterId == masterId }?.sync()
+            nativeSyncSubscribers.firstOrNull { it.masterId == masterId }?.sync()
         }
     }
 

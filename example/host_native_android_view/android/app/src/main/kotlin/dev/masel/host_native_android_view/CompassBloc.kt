@@ -1,17 +1,17 @@
 package dev.masel.host_native_android_view
 
 import com.beust.klaxon.Klaxon
-import dev.masel.synced_bloc.NativeSyncSlave
+import dev.masel.synced_bloc.NativeSyncSubscriber
 
 private val klaxon = Klaxon()
 
 class CompassBloc {
-    val syncSlave = NativeSyncSlave.withMasterId("compass")
+    val syncSubscriber = NativeSyncSubscriber.withMasterId("compass")
     val state: CompassState?
-        get() = if (syncSlave.jsonState == null) null else CompassState.fromJson(syncSlave.jsonState!!)
+        get() = if (syncSubscriber.jsonState == null) null else CompassState.fromJson(syncSubscriber.jsonState!!)
 
     fun setDegrees(degrees: Double) {
-        syncSlave.addEvent(CompassEventSetDegrees(degrees).toJson())
+        syncSubscriber.addEvent(CompassEventSetDegrees(degrees).toJson())
     }
 }
 

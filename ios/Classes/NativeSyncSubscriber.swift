@@ -1,4 +1,4 @@
-public class NativeSyncSlave {
+public class NativeSyncSubscriber {
     class ChangeListener {
         let onSyncedBlocStateChange: () -> Void
 
@@ -8,7 +8,7 @@ public class NativeSyncSlave {
     }
 
     let masterId: String
-    private static var nativeSyncSlaves: [NativeSyncSlave] = []
+    private static var nativeSyncSubscribers: [NativeSyncSubscriber] = []
     private var changeListeners: [ChangeListener] = []
     private var jsonState: String? = nil
     private var syncMaster: SyncMaster? = nil
@@ -17,35 +17,35 @@ public class NativeSyncSlave {
         self.masterId = masterId
     }
 
-    static func withMasterId(masterId: String) -> NativeSyncSlave {
-        if let existing = nativeSyncSlaves.first(where: { $0.masterId == masterId }) {
+    static func withMasterId(masterId: String) -> NativeSyncSubscriber {
+        if let existing = nativeSyncSubscribers.first(where: { $0.masterId == masterId }) {
             existing.sync() // So always trigger change listeners
             return existing
         } else {
-            let new = NativeSyncSlave(masterId: masterId)
+            let new = NativeSyncSubscriber(masterId: masterId)
             if let master = SwiftSyncedBlocPlugin.getMasterWithId(masterId: masterId) {
                 new.setup(syncMaster: master)
             }
-            nativeSyncSlaves.append(new)
+            nativeSyncSubscribers.append(new)
             return new
         }
     }
 
     internal static func onRegisterMaster(master: SyncMaster) {
-        if let slave = nativeSyncSlaves.first(where: { $0.masterId == master.masterId }) {
-            slave.setup(syncMaster: master)
+        if let subscriber = nativeSyncSubscribers.first(where: { $0.masterId == master.masterId }) {
+            subscriber.setup(syncMaster: master)
         }
     }
 
     internal static func onUnregisterMaster(masterId: String) {
-        if let slave = nativeSyncSlaves.first(where: { $0.masterId == masterId }) {
-            slave.syncMaster = nil
+        if let subscriber = nativeSyncSubscribers.first(where: { $0.masterId == masterId }) {
+            subscriber.syncMaster = nil
         }
     }
 
     internal static func onMasterChange(masterId: String) {
-        if let slave = nativeSyncSlaves.first(where: { $0.masterId == masterId }) {
-            slave.sync()
+        if let subscriber = nativeSyncSubscribers.first(where: { $0.masterId == masterId }) {
+            subscriber.sync()
         }
     }
 

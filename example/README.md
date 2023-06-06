@@ -18,4 +18,4 @@ The compass view here is a native android view. The compass view's state (Compas
 
 # [flutter_app](https://github.com/mase7569/synced_bloc/tree/master/example/flutter_app)
 
-Just a dummy app with multiple sync masters and sync slaves.
+Just a dummy app with multiple sync masters and sync subscribers.
