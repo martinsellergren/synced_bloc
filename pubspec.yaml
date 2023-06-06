@@ -1,5 +1,5 @@
 name: synced_bloc
-description: A new Flutter plugin project.
+description: A bloc that is synced across platform channels.
 version: 0.0.1
 homepage: https://github.com/mase7569/synced_bloc
 
